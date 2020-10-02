@@ -4,45 +4,46 @@ const router = Router();
 
 
 const _= require('underscore');
-const movies = require('../Asistencia.json')
+const Asistencia = require('../Asistencia.json')
 
 router.get('/', (req, res) => {
     res.send('<h1>Hola clase</h1>')
 })
 
-router.get('/movies', (req,res)=>{
-    res.json(movies)
+router.get('/Asistencia', (req,res)=>{
+    res.json(Asistencia)
 })
 
-router.post('/movies', (req,res)=>{
-    const {Titulo, Director, Categoria, Ano} = req.body;
+router.post('/Asistencia', (req,res)=>{
+    const {Nombre_Estudiante, Grado, email, QR, Fecha} = req.body;
 
-    if(Titulo && Director && Categoria && Ano){
-        const id = movies.length + 1;
-        const newMovie = {id,...req.body}
-        movies.push(newMovie);
-        console.log(movies);
-        res.json(movies)
+    if(Nombre_Estudiante && Grado && email && QR && Fecha ){
+        const id = Asistencia.length + 1;
+        const newAsistencia = {id,...req.body}
+        Asistencia.push(newAsistencia);
+        console.log(Asistencia);
+        res.json(Asistencia)
     }else{
         res.send('Error al almacenar información')
     }
     console.log(req.body)
 });
 
-router.put('/movies/:id', (req, res)=> {
-    const {Titulo, Director, Categoria, Ano} = req.body;
+router.put('/Asistencia/:id', (req, res)=> {
+    const {Nombre_Estudiante, Grado, email, QR, Fecha} = req.body;
     const{id}= req.params;
 
-    if(Titulo && Director && Categoria && Ano){
-        _.each(movies,(movie, i)=>{
-            if (movie.id=id){
-                movie.Titulo = Titulo;
-                movie.Director = Director;
-                movie.Categoria = Categoria;
-                movie.Ano = Ano;
+    if(Nombre_Estudiante && Grado && email && QR && Fecha){
+        _.each(Asistencia,(Asistencia, i)=>{
+            if (Asistencia.id=id){
+                Asistencia.Nombre_Estudiante = Nombre_Estudiante;
+                Asistencia.Grado = Grado;
+                Asistencia.email = email;
+                Asistencia.QR = QR;
+                Asistencia.Fecha = Fecha;
             }
         })
-        res.json(movies)
+        res.json(Asistencia)
     }
     else{
         res.send ('Error de actualización de información')
@@ -50,14 +51,14 @@ router.put('/movies/:id', (req, res)=> {
     console.log(req.body)
 })  
 
-router.delete('/movies/:id', (req, res) => {
+router.delete('/Asistencia/:id', (req, res) => {
     const { id } = req.params;
-    _.each(movies,(movie,i)=>{
-      if(movie.id==id){
-        movies.splice(i,1)
+    _.each(Asistencia,(Asistencia,i)=>{
+      if(Asistencia.id==id){
+        Asistencia.splice(i,1)
       }
     })
-    res.json(movies)
+    res.json(Asistencia)
   });
 
 module.exports= router;
